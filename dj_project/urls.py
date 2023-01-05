@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from first.views import voting_page, list_of_votings_page
+from first.views import voting_page, list_of_votings_page, authoriZation_page, index_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('voting/', voting_page),
     path('list/', list_of_votings_page),
+    path('login/', authoriZation_page),
+    path('', index_page),
 ]
