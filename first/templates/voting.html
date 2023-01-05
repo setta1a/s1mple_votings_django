@@ -4,19 +4,81 @@
     <meta charset="UTF-8">
     <title>Голосование</title>
 </head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    header{
+        background-color: #2d3a49;
+        text-decoration: none;
+        color: white;
+        padding: 30px 50px;
+    }
+    .header_link{
+        text-decoration: none;
+        color: white
+        
+    }
+    .header{
+        color: white;
+        font-size: 24px;
+    }
+    .voting{
+        margin: 30px 80px;
+    }
+    .title{
+        color: #2d3a49;
+        size: 36px;
+        margin: 20px;
+    }
+    .subtitle{
+        color: #2d3a49;
+        size: 28px;
+        margin: 5px;
+    }
+    .submit-button{
+        padding: 10px 5px;
+        background-color: #2d3a49;
+        color: white;
+        font-size: 18px;
+        margin: auto;
+        border-radius: 20px;
+        display: block;
+        transition: 0.5s;
+    }
+    .button:hover{
+        transform: scale(1.1)
+    }
+    .voting-btn{
+        padding: 5px 10px;
+        background-color: #bdd3d9;
+        color: white;
+        font-size: 15px;
+        border: 2px solid #cacaca;
+        border-radius: 10px;
+        display: block;
+        transition: 0.5s;
+        margin: 5px 10px;
+        transition: 0.2s;
+    }
+    .voting-btn:hover{
+        transform: scale(1.1)
+    }
+</style>
 <body>
-    <h1>Страница с голосованием</h1>
-    <p>
-        <h3>Меню</h3>
-        <a href="/list/">Список всех голосований</a> |
-        <a href="/voting/">Голосование</a>
-    </p>
-    <div>
-        <h2>Было два стула</h2>
+    <header>
+        <h3 class="header">Меню</h3>
+        <a class="header_link" href="/list/">Список всех голосований</a> |
+        <a class="header_link" href="/voting/">Голосование</a>
+    </header>
+    <h1 class="title">Страница с голосованием</h1>
+    <div class="voting">
+        <h2 class="subtitle">Было два стула</h2>
         <form>
-            <input type="radio" name="variant" id="firstchoice"><label for="firstchoice">Один</label>
-            <input type="radio" name="variant" id="secondchoice"><label for="secondchoice">ДВА</label>
-            <input type="submit">
+            <input class="voting-btn" type="button" name="variant" id="firstchoice" value="One"><label for="firstchoice"></label>
+            <input class="voting-btn" type="button" name="variant" id="secondchoice" value="Two"><label for="secondchoice"></label>
+            <input class="submit-button" type="submit">
         </form>
     </div>
 </body>

@@ -4,16 +4,131 @@
     <meta charset="UTF-8">
     <title>Список голосований</title>
 </head>
+<style>
+    a{
+        text-decoration: none;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    header{
+        background-color: #2d3a49;
+        text-decoration: none;
+        color: white;
+        padding: 30px 50px;
+    }
+    .header_link{
+        text-decoration: none;
+        color: white
+        
+    }
+    .header{
+        color: white;
+        font-size: 24px;
+    }
+    .voting{
+        margin: 30px 80px;
+    }
+    .title{
+        color: #2d3a49;
+        size: 36px;
+        margin: 20px;
+    }
+    .subtitle{
+        color: #2d3a49;
+        size: 28px;
+        margin: 5px;
+        text-decoration: none;
+    }
+    .submit-button{
+        padding: 10px 5px;
+        background-color: #2d3a49;
+        color: white;
+        font-size: 18px;
+        margin: auto;
+        border-radius: 20px;
+        display: block;
+        transition: 0.5s;
+    }
+    .button:hover{
+        transform: scale(1.1)
+    }
+    .voting-btn{
+        padding: 5px 10px;
+        background-color: #bdd3d9;
+        color: white;
+        font-size: 15px;
+        border: 2px solid #cacaca;
+        border-radius: 10px;
+        display: block;
+        transition: 0.5s;
+        margin: 5px 10px;
+        transition: 0.2s;
+    }
+    .voting-btn:hover{
+        transform: scale(1.1)
+    }
+    .ava{
+        border: 1px solid black;
+        border-radius: 50%;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .card{
+        border: 2px solid #cacaca;
+        padding: 10px;
+        color: #2d3a49;
+        box-shadow: inset;
+        text-decoration: none;
+        width: 25%;
+        margin: 20px;
+        border-radius: 30px;
+        display: inline-block;
+    }
+</style>
 <body>
-    <h1>Страница со списком голосований</h1>
-    <p>
-        <h3>Меню</h3>
-        <a href="/list/">Список всех голосований</a> |
-        <a href="/voting/">Голосование</a>
-    </p>
-    <h3>Список голосований</h3>
-    <ul>
-        <li><a href="/voting/">Было два стула</a></li>
-    </ul>
+    <header>
+        <h3 class="header">Меню</h3>
+        <a class="header_link" href="/list/">Список всех голосований</a> |
+        <a class="header_link" href="/voting/">Голосование</a>
+    </header>
+    <h3 class="title">Список голосований</h3>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
+    <a href="/voting/">
+        <div class="card">
+            <img class="ava" src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png" alt="">
+            <h3 class="subtitle">Было два стула</h3>
+        </div>
+    </a>
 </body>
 </html>
