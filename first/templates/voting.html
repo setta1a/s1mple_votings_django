@@ -65,6 +65,9 @@
     .voting-btn:hover{
         transform: scale(1.1)
     }
+    .results{
+        display: inline;
+    }
 </style>
 <body>
     <header>
@@ -77,10 +80,22 @@
     <div class="voting">
         <h2 class="subtitle">Было два стула</h2>
         <form>
-            <input class="voting-btn" type="button" name="variant" id="firstchoice" value="One"><label for="firstchoice"></label>
-            <input class="voting-btn" type="button" name="variant" id="secondchoice" value="Two"><label for="secondchoice"></label>
-            <input class="submit-button" type="submit">
+            <div style="display: flex;">
+                <input class="voting-btn" type="button" name="variant" id="firstchoice" value="One"><span class="results" id="one" for="firstchoice">56%</span>
+            </div>
+            <div style="display: flex;">
+                <input class="voting-btn" type="button" name="variant" id="secondchoice" value="Two"><span class="results" id="two" for="secondchoice">44%</span>
+            </div>
+            <input id="sbmtbtn" class="submit-button" type="submit">
         </form>
     </div>
 </body>
+<script>
+    'use strict';
+    sbmtbtn.addEventListener('click', (e) => {
+        e.preventDefalut()
+        one.innerHTML = "56%"
+        two.innerHTML = "44%"
+    })
+</script>
 </html>
