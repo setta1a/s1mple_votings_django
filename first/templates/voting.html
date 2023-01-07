@@ -78,13 +78,15 @@
     </header>
     <h1 class="title">Страница с голосованием</h1>
     <div class="voting">
-        <h2 class="subtitle">Было два стула</h2>
-        <form>
+        <h2 class="subtitle">{{ VOting.theme }}</h2>
+        <form action="/voting/" method="post">
             <div style="display: flex;">
-                <input class="voting-btn" type="button" name="variant" id="firstchoice" value="One"><span class="results" id="one" for="firstchoice">56%</span>
+                {% csrf_token %}
+                <input class="voting-btn" type="button" name="variant" id="firstchoice" value="{{ VOting.first_option }}"><label class="results" id="one" for="firstchoice">{{ VOting.first_option_count }}</label>
             </div>
             <div style="display: flex;">
-                <input class="voting-btn" type="button" name="variant" id="secondchoice" value="Two"><span class="results" id="two" for="secondchoice">44%</span>
+                {% csrf_token %}
+                <input class="voting-btn" type="button" name="variant" id="secondchoice" value="{{ VOting.second_option }}"><label class="results" id="two" for="secondchoice">{{ VOting.second_option_count }}</label>
             </div>
             <input id="sbmtbtn" class="submit-button" type="submit">
         </form>

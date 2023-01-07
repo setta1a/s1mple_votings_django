@@ -1,7 +1,14 @@
 from django.shortcuts import render
 
+from first.models import DiscreteVotingZ
+
+
 def voting_page(request):
     context = {}
+    if request.method == "POST":
+        print(request)
+
+    context['VOting'] = DiscreteVotingZ.objects.all()[0]
     return render(request, 'voting.html', context)
 
 
