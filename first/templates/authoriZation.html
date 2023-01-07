@@ -4,6 +4,110 @@
     <meta charset="UTF-8">
     <title>Авторизация</title>
 </head>
+<style>
+    a{
+        text-decoration: none;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    header{
+        background-color: #2d3a49;
+        text-decoration: none;
+        color: white;
+        padding: 30px 50px;
+    }
+    .header_link{
+        text-decoration: none;
+        color: white
+        
+    }
+    .header{
+        color: white;
+        font-size: 24px;
+    }
+    .voting{
+        margin: 30px 80px;
+    }
+    .title{
+        color: #2d3a49;
+        size: 36px;
+        margin: 20px;
+    }
+    .subtitle{
+        color: #2d3a49;
+        size: 28px;
+        margin: 5px;
+        text-decoration: none;
+    }
+    .submit-button{
+        padding: 10px 5px;
+        background-color: #2d3a49;
+        color: white;
+        font-size: 18px;
+        margin: auto;
+        border-radius: 20px;
+        display: block;
+        transition: 0.5s;
+    }
+    .button:hover{
+        transform: scale(1.1)
+    }
+    .voting-btn{
+        padding: 5px 10px;
+        background-color: #bdd3d9;
+        color: white;
+        font-size: 15px;
+        border: 2px solid #cacaca;
+        border-radius: 10px;
+        display: block;
+        transition: 0.5s;
+        margin: 5px 10px;
+        transition: 0.2s;
+    }
+    .input{
+        padding: 5px 10px;
+        background-color: #bdd3d9;
+        width: 90%;
+        color: white;
+        font-size: 15px;
+        border: 2px solid #cacaca;
+        border-radius: 10px;
+        display: block;
+        transition: 0.5s;
+        margin: 5px 10px;
+        transition: 0.2s;
+    }
+    .voting-btn:hover{
+        transform: scale(1.1)
+    }
+    .ava{
+        border: 1px solid black;
+        border-radius: 50%;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .card{
+        border: 2px solid #cacaca;
+        padding: 10px;
+        color: #2d3a49;
+        box-shadow: inset;
+        text-decoration: none;
+        width: 25%;
+        margin: 20px;
+        border-radius: 30px;
+        display: inline-block;
+    }
+    #auth-container{
+        padding: 20px;
+        border: 2px solid #cacaca;
+        border-radius: 30px;
+        width: 20%;
+        display: block;
+        margin: 30px auto;
+    }
+  </style>
 <body>
     <header>
         <h3 class="header">Меню</h3>
@@ -11,12 +115,11 @@
         <a class="header_link" href="/voting/">Голосование</a> |
         <a class="header_link" href="/login/">Авторизация</a>
     </header>
-    <h1 class="title">Страница с авторизацией</h1>
-    <div>
-        <h2 class="subtitle">Авторизация</h2>
+    <div id="auth-container">
+        <h1 class="title">Авторизация</h1>
         <form>
-            <input class="voting-btn" type="text" name="login" id="login" placeholder="SEMEN ANIKIn">
-            <input class="voting-btn" type="text" name="password" id="password" placeholder="OralCumshot">
+            <input class="input" type="text" name="login" id="login" placeholder="SEMEN ANIKIn">
+            <input class="input" type="text" name="password" id="password" placeholder="12345678">
             <input class="submit-button" type="submit">
         </form>
     </div>
