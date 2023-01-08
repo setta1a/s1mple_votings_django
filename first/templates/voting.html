@@ -83,7 +83,6 @@
             {% csrf_token %}
             <div style="display: flex;">
                 <input class="voting-btn" type="submit" name="variant" id="firstchoice" value="{{ VOting.first_option }}"><label class="results" id="one" for="firstchoice">{{ VOting.first_option_count }}</label>
-
             </div>
             <div style="display: flex;">
                 <input class="voting-btn" type="submit" name="variant" id="secondchoice" value="{{ VOting.second_option }}"><label class="results" id="two" for="secondchoice">{{ VOting.second_option_count }}</label>
