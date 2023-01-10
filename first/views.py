@@ -1,15 +1,15 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from first.models import DiscreteVotings
 
 
-def voting_page(request):
+def voting_page(request, voting_id):
     context = {}
     if request.method == "POST":
         print(request.POST)
         if request.POST['variant']:
-            t = DiscreteVotings.objects.all()[0]
+            t = DiscreteVotings.objects.get(id=voting_id)
             if request.POST['variant'] == t.first_option:
                 t.first_option_count += 1
             elif request.POST['variant'] == t.second_option:
@@ -17,7 +17,7 @@ def voting_page(request):
             t.save()
             return HttpResponseRedirect('/voting/')
 
-    context['VOting'] = DiscreteVotings.objects.all()[0]
+    context['VOting'] = get_object_or_404(DiscreteVotings, id=voting_id)
     return render(request, 'voting.html', context)
 
 

@@ -20,7 +20,7 @@ from first.views import voting_page, list_of_votings_page, authorization_page, i
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('voting/', voting_page),
+    path('voting/<int:voting_id>/', voting_page),
     path('list/', list_of_votings_page),
     path('login/', authorization_page),
     path('', index_page),
