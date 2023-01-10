@@ -15,7 +15,7 @@ def voting_page(request, voting_id):
             elif request.POST['variant'] == t.second_option:
                 t.second_option_count += 1
             t.save()
-            return HttpResponseRedirect('/voting/')
+            # return HttpResponseRedirect('/voting/')
 
     context['VOting'] = get_object_or_404(DiscreteVotings, id=voting_id)
     return render(request, 'voting.html', context)
