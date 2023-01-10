@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from first.models import DiscreteVotingZ
+from first.models import DiscreteVotings
 
 
 def voting_page(request):
@@ -9,7 +9,7 @@ def voting_page(request):
     if request.method == "POST":
         print(request.POST)
         if request.POST['variant']:
-            t = DiscreteVotingZ.objects.all()[0]
+            t = DiscreteVotings.objects.all()[0]
             if request.POST['variant'] == t.first_option:
                 t.first_option_count += 1
             elif request.POST['variant'] == t.second_option:
@@ -17,7 +17,7 @@ def voting_page(request):
             t.save()
             return HttpResponseRedirect('/voting/')
 
-    context['VOting'] = DiscreteVotingZ.objects.all()[0]
+    context['VOting'] = DiscreteVotings.objects.all()[0]
     return render(request, 'voting.html', context)
 
 
@@ -26,9 +26,9 @@ def list_of_votings_page(request):
     return render(request, 'list_of_votings.html', context)
 
 
-def authoriZation_page(request):
+def authorization_page(request):
     context = {}
-    return render(request, 'authoriZation.html', context)
+    return render(request, 'authorization.html', context)
 
 
 def index_page(request):

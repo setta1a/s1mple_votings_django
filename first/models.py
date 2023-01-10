@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class DiscreteVotingZ(models.Model):
+class DiscreteVotings(models.Model):
     theme = models.CharField(max_length=100)
     first_option = models.CharField(max_length=50)
     second_option = models.CharField(max_length=50)
