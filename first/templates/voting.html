@@ -24,7 +24,7 @@
         color: white;
         font-size: 24px;
     }
-    .voting{
+    .Voting{
         margin: 30px 80px;
     }
     .title{
@@ -50,7 +50,7 @@
     .button:hover{
         transform: scale(1.1)
     }
-    .voting-btn{
+    .Voting-btn{
         padding: 5px 10px;
         background-color: #bdd3d9;
         color: white;
@@ -62,7 +62,7 @@
         margin: 5px 10px;
         transition: 0.2s;
     }
-    .voting-btn:hover{
+    .Voting-btn:hover{
         transform: scale(1.1)
     }
     .results{
@@ -73,29 +73,26 @@
     <header>
         <h3 class="header">Меню</h3>
         <a class="header_link" href="/list/">Список всех голосований</a> |
-        <a class="header_link" href="/voting/">Голосование</a> |
+        <a class="header_link" href="/voting/1/">Голосование</a> |
         <a class="header_link" href="/login/">Авторизация</a>
     </header>
     <h1 class="title">Страница с голосованием</h1>
-    <div class="voting">
-        <h2 class="subtitle">{{ VOting.theme }}</h2>
-        <form action="/voting/" method="post">
+    <div class="Voting">
+        <h2 class="subtitle">{{ voting.name }}</h2>
+        <p>{{ voting.description }}</p>
+        <form action="" method="post">
             {% csrf_token %}
-            <div style="display: flex;">
-                <input class="voting-btn" type="submit" name="variant" id="firstchoice" value="{{ VOting.first_option }}"><label class="results" id="one" for="firstchoice">{{ VOting.first_option_count }}</label>
-            </div>
-            <div style="display: flex;">
-                <input class="voting-btn" type="submit" name="variant" id="secondchoice" value="{{ VOting.second_option }}"><label class="results" id="two" for="secondchoice">{{ VOting.second_option_count }}</label>
-            </div>
+            {% for variant in voting_variants %}
+                <div style="display: flex;">
+                    <button class="Voting-btn" name="variant_id" value="{{ variant.id }}">
+                        {{ variant.description }}
+                    </button>
+                    <label> {{ variant.votes_count }} </label>
+                    <br>
+                </div>
+            {% endfor %}
         </form>
+        <p>Автор: {{ voting.author }} </p>
     </div>
 </body>
-<script>
-    'use strict';
-    sbmtbtn.addEventListener('click', (e) => {
-        e.preventDefalut()
-        one.innerHTML = "56%"
-        two.innerHTML = "44%"
-    })
-</script>
 </html>
