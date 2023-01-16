@@ -93,6 +93,9 @@
             {% endfor %}
         </form>
         <p>Автор: {{ voting.author }} </p>
+        {% if is_voted %}
+            <p>Пользователь уже голосовал!</p>
+        {% endif %}
     </div>
 </body>
 </html>
