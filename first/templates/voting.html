@@ -103,7 +103,7 @@
             {% csrf_token %}
             {% for variant in voting_variants %}
                 <div style="display: flex;">
-                    <button class="btn btn-primary btn-lg disabled" name="variant_id" value="{{ variant.id }}" disabled>
+                    <button class="btn btn-primary btn-lg disabled" name="variant_id" value="{{ variant.id }}">
                         {{ variant.description }}
                     </button>
                     <label> {{ variant.votes_count }} </label>
