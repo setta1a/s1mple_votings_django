@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <form class="col-6 offset-3" method="post" action="/"><br>
+            <input class="form-control" type="text" name="login" id="login" placeholder="vasya">
+            <input class="form-control" type="text" name="password" id="password" placeholder="promprog"><br>
+            <input class="btn btn-primary col-4 offset-4" type="submit" value="Отправить">
+        </form>
+    </div>
+</div>
 
-<form>
-    <input class="form-control" type="text" name="login" id="login" placeholder="SEMEN ANIKIn">
-    <input class="form-control" type="text" name="password" id="password" placeholder="12345678">
-    <input class="btn btn-primary" type="submit" value="Отправить">
-</form>
 
 {% endblock %}
