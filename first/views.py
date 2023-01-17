@@ -7,6 +7,8 @@ from first.models import Voting, VoteVariant, VoteFact
 
 def voting_page(request, voting_id):
     context = {}
+    context["pagetitle"] = "Голосование"
+    context["pageheader"] = "Было два стула"
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
     if request.method == "POST":
@@ -29,16 +31,22 @@ def voting_page(request, voting_id):
 
 def list_of_votings_page(request):
     context = {}
+    context["pagetitle"] = "List of votings"
+    context["pageheader"] = "Все голосования"
     context["votings_list"] = Voting.objects.all()
     return render(request, 'list_of_votings.html', context)
 
 def authorization_page(request):
     context = {}
+    context["pagetitle"] = "Auth"
+    context["pageheader"] = "Авторизация"
     return render(request, 'authorization.html', context)
 
 
 def index_page(request):
     context = {}
+    context["pagetitle"] = "Index page"
+    context["pageheader"] = "Главная"
     return render(request, 'index.html', context)
 
 # Create your views here.
