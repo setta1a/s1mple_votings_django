@@ -36,12 +36,6 @@ def list_of_votings_page(request):
     context["votings_list"] = Voting.objects.all()
     return render(request, 'list_of_votings.html', context)
 
-def authorization_page(request):
-    context = {}
-    context["pagetitle"] = "Auth"
-    context["pageheader"] = "Авторизация"
-    return render(request, 'authorization.html', context)
-
 
 def index_page(request):
     context = {}

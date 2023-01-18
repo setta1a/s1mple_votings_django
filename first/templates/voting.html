@@ -2,23 +2,23 @@
 
 {% block content %}
 <div class="Voting">
-        <h2 class="subtitle">{{ voting.name }}</h2>
-        <p>{{ voting.description }}</p>
-        <form action="" method="post">
-            {% csrf_token %}
-            {% for variant in voting_variants %}
-                <div style="display: flex;">
-                    <button class="btn btn-primary btn-lg disabled" name="variant_id" value="{{ variant.id }}">
-                        {{ variant.description }}
-                    </button>
-                    <label> {{ variant.votes_count }} </label>
-                    <br>
-                </div>
-            {% endfor %}
-        </form>
-        <p>Автор: {{ voting.author }} </p>
-        {% if is_voted %}
-            <p>Пользователь уже голосовал!</p>
-        {% endif %}
-    </div>
+    <h2 class="subtitle">{{ voting.name }}</h2>
+    <p>{{ voting.description }}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for variant in voting_variants %}
+        <div style="display: flex;">
+            <button class="btn btn-primary btn-lg disabled" name="variant_id" value="{{ variant.id }}">
+                {{ variant.description }}
+            </button>
+            <label> {{ variant.votes_count }} </label>
+            <br>
+        </div>
+        {% endfor %}
+    </form>
+    <p>Автор: {{ voting.author }} </p>
+    {% if is_voted %}
+    <p>Пользователь уже голосовал!</p>
+    {% endif %}
+</div>
 {% endblock %}
