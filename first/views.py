@@ -43,4 +43,8 @@ def index_page(request):
     context["pageheader"] = "Главная"
     return render(request, 'index.html', context)
 
+def add_voting(request):
+    context = {}
+    return render(request, 'add_voting.html', context)
+
 # Create your views here.
