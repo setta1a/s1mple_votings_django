@@ -47,4 +47,8 @@ def add_voting(request):
     context = {}
     return render(request, 'add_voting.html', context)
 
+def registration(request):
+    context = {}
+    return render(request, 'registration.html', context)
+
 # Create your views here.
