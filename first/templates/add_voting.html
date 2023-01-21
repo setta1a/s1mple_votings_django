@@ -3,20 +3,43 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <form method="post" action="/voting/">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Тип голосования
-            </button>
-            <ul class="dropdown-menu">
-              <li><button class="dropdown-item" type="button">Дискретное</button></li>
-              <li><button class="dropdown-item" type="button">Один из многих</button></li>
-              <li><button class="dropdown-item" type="button">Ещё какой-то, потом добавлю</button></li>
-            </ul>
-          </div>
+    <form method="post" action="/voting/1/" class="col-4 offset-4 mb-3">
+      {% csrf_token %}
+      <div class="btn-group col-4  mb-3">
+        <button style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Тип голосования
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item" type="button">Один из двух</button></li>
+          <li><button class="dropdown-item" type="button">Один из многих</button></li>
+          <li><button class="dropdown-item" type="button">Ещё какой-то</button></li>
+        </ul>
+      </div>
+      <label for="exampleInputEmail1" class="form-label">Введите параметры голосования</label>
+      <input type="text" class="form-control" id="theme" placeholder="Тема голосования">
+      <div id="emailHelp" class="form-text">Вы можете узнать у других пользователей их мнение по любому вопросу. Надо всего лишь создать голосование</div>
+      <button id="add" type="button" class="btn btn-primary">Добавить вариант ответа +</button>
+      <div class="container">
+        <div class="row">
+          <div class="col" id="variants"></div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Отправить</button>
     </form>
   </div>
 </div>
+
+<script>
+  'use strict'
+  let count = 1
+  add.addEventListener('click', () =>{
+    let input = document.createElement("input")
+    input.classList.add("form-control")
+    input.placeholder = `Вариант голосования номер ${count}`
+    document.querySelector("#variants").appendChild(input)
+    count++
+  })
+</script>
   
 
 {% endblock %}
