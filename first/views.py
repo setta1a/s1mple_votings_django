@@ -45,6 +45,24 @@ def index_page(request):
 
 def add_voting(request):
     context = {}
+    if request.method == "POST":
+        print(request.POST)
+        if request.POST.get('theme') and request.POST.get("variants") and request.user.is_authenticated:
+            pass
+            new_voting = Voting(
+                name=request.POST['theme'],
+                description = request.POST['theme'],
+                voting_type = 2,
+                author = request.user,
+            )
+            new_voting.save()
+            for variant in request.POST.getlist("variants"):
+                new_variant = VoteVariant(
+                    description = variant,
+                    voting = new_voting,
+                )
+                new_variant.save()
+
     return render(request, 'add_voting.html', context)
 
 def registration(request):
