@@ -22,7 +22,7 @@ from first.views import voting_page, list_of_votings_page, index_page, add_votin
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
-    path('voting/<int:voting_id>/', voting_page),
+    path('voting/<int:voting_id>/', voting_page, name='voting_details'),
     path('list/', list_of_votings_page),
     path('login/', auth_views.LoginView.as_view(
         extra_context={
