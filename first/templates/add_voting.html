@@ -53,13 +53,14 @@
     bin_variants.classList.add("d-none")
 
     add.addEventListener('click', () =>{
-    let input = document.createElement("input")
-    input.classList.add("form-control")
-    input.placeholder = `Вариант голосования номер ${count}`
-    input.name = 'variants'
-    inputs_arr.push(input)
-    document.querySelector("#variants").appendChild(input)
-    count++
+      console.log(count)
+      let input = document.createElement("input")
+      input.classList.add("form-control")
+      input.placeholder = `Вариант голосования номер ${count}`
+      input.name = 'variants'
+      inputs_arr.push(input)
+      document.querySelector("#variants").appendChild(input)
+      count++
   })
 })
   
