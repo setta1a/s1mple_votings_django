@@ -6,14 +6,10 @@
     <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3">
       {% csrf_token %}
       <div class="btn-group col-4  mb-3">
-        <button style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          Тип голосования
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><button id="one" class="dropdown-item" type="button">Один из двух</button></li>
-          <li><button id="alot" class="dropdown-item" type="button">Один из многих</button></li>
-          <li><button class="dropdown-item" type="button">Ещё какой-то</button></li>
-        </ul>
+        <select  aria-label="Тип голосования" style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <option id="one" class="dropdown-item">Один из двух</option>
+          <option id="alot" class="dropdown-item">Один из многих</option>
+        </select>
       </div>
       <label class="form-label">Введите параметры голосования</label>
       <input type="text" class="form-control" id="theme" placeholder="Тема голосования" name="theme">
@@ -21,7 +17,7 @@
       <button id="add" type="button"  class="btn btn-primary d-none">Добавить вариант ответа +</button>
       <div class="container">
         <div class="row">
-          <div class="col" id="variants"></div>
+          <div class="col offset-0" id="variants"></div>
         </div>
       </div>
       <div class="container">
@@ -51,9 +47,11 @@
     }
   })
   document.querySelector("#alot").addEventListener("click", () => {
+    let count = 1
+
     add.classList.remove("d-none")
     bin_variants.classList.add("d-none")
-    let count = 1
+
     add.addEventListener('click', () =>{
     let input = document.createElement("input")
     input.classList.add("form-control")

@@ -5,10 +5,10 @@
     <div class="row">
         {% for voting in votings_list %}
         <div class="col-4">
-            <div class="card">
+            <div class="card p-2">
                 <img class="ava" width="100px" alt=""
                      src="https://filmdaze.net/wp-content/uploads/2020/01/americanpsycho.png">
-                <h3 class="subtitle"> <a href="{% url 'voting_details' voting.id %}">{{ voting.name }}</a> </h3>
+                <h3 class="subtitle text-decoration-none"> <a href="{% url 'voting_details' voting.id %}">{{ voting.name }}</a> </h3>
                 <p>Описание: {{ voting.description }}</p>
                 <p>Автор: {{ voting.author }}</p>
             </div>
