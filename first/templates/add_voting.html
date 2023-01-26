@@ -6,9 +6,9 @@
     <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3">
       {% csrf_token %}
       <div class="btn-group col-4  mb-3">
-        <select  aria-label="Тип голосования" style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <option id="one" class="dropdown-item">Один из двух</option>
-          <option id="alot" class="dropdown-item">Один из многих</option>
+        <select  aria-label="Тип голосования" style="display: block; margin-top: 100px;" type="button" name="voting_type" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <option id="one" class="dropdown-item" value="3">Один из двух</option>
+          <option id="alot" class="dropdown-item" value="2">Один из многих</option>
         </select>
       </div>
       <label class="form-label">Введите параметры голосования</label>
