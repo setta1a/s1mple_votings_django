@@ -13,7 +13,7 @@ def voting_page(request, voting_id):
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
     if request.method == "POST":
         is_voted = False
-        for votefact in VoteFact.objects.filter(author = request.user):
+        for votefact in VoteFact.objects.filter(author=request.user):
             if VoteVariant.objects.filter(id=votefact.variant_id).filter(voting_id=voting_id).count() != 0:
                 is_voted = True
                 context["is_voted"] = is_voted
@@ -21,10 +21,9 @@ def voting_page(request, voting_id):
 
         if request.user.is_authenticated and not is_voted:
             record = VoteFact(variant_id=request.POST['variant_id'],
-                              created_at = datetime.datetime.now(),
+                              created_at=datetime.datetime.now(),
                               author=request.user)
             record.save()
-
 
     return render(request, 'voting.html', context)
 
@@ -43,27 +42,30 @@ def index_page(request):
     context["pageheader"] = "Главная"
     return render(request, 'index.html', context)
 
+
 def add_voting(request):
     context = {}
     if request.method == "POST":
         print(request.POST)
-        if request.POST.get('voting_type') and request.POST.get('theme') and request.POST.get("variants") and request.user.is_authenticated:
+        if request.POST.get('voting_type') and request.POST.get('theme') and request.POST.get(
+                "variants") and request.user.is_authenticated:
             pass
             new_voting = Voting(
                 name=request.POST['theme'],
-                description = request.POST['theme'],
-                voting_type = int(request.POST['voting_type']),
-                author = request.user,
+                description=request.POST['theme'],
+                voting_type=int(request.POST['voting_type']),
+                author=request.user,
             )
             new_voting.save()
             for variant in request.POST.getlist("variants"):
                 new_variant = VoteVariant(
-                    description = variant,
-                    voting = new_voting,
+                    description=variant,
+                    voting=new_voting,
                 )
                 new_variant.save()
 
     return render(request, 'add_voting.html', context)
+
 
 def registration(request):
     context = {}
