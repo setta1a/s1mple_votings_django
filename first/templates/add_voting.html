@@ -7,8 +7,9 @@
       {% csrf_token %}
       <div class="btn-group col-4  mb-3">
         <select  aria-label="Тип голосования" style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <option id="one" class="dropdown-item">Один из двух</option>
-          <option id="alot" class="dropdown-item">Один из многих</option>
+          <option selected>Тип голосования</option>
+          <option value="1" id="one" class="dropdown-item">Один из двух</option>
+          <option value="2" id="alot" class="dropdown-item">Один из многих</option>
         </select>
       </div>
       <label class="form-label">Введите параметры голосования</label>
@@ -47,22 +48,20 @@
     }
   })
   document.querySelector("#alot").addEventListener("click", () => {
-    let count = 1
-
     add.classList.remove("d-none")
     bin_variants.classList.add("d-none")
-
-    add.addEventListener('click', () =>{
-      console.log(count)
-      let input = document.createElement("input")
-      input.classList.add("form-control")
-      input.placeholder = `Вариант голосования номер ${count}`
-      input.name = 'variants'
-      inputs_arr.push(input)
-      document.querySelector("#variants").appendChild(input)
-      count++
   })
-})
+  add.addEventListener('click', () =>{
+    let count = 1
+
+    let input = document.createElement("input")
+    input.classList.add("form-control")
+    input.placeholder = `Ответ`
+    input.name = `variant ${count}`
+    inputs_arr.push(input)
+    document.querySelector("#variants").appendChild(input)
+    count++
+  })
   
 </script>
   
