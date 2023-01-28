@@ -47,9 +47,8 @@ def add_voting(request):
     context = {}
     if request.method == "POST":
         print(request.POST)
-        if request.POST.get('voting_type') and request.POST.get('theme') and request.POST.get(
+        if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
                 "variants") and request.user.is_authenticated:
-            pass
             new_voting = Voting(
                 name=request.POST['theme'],
                 description=request.POST['theme'],

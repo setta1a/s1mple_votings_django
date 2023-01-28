@@ -6,9 +6,9 @@
     <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3">
       {% csrf_token %}
       <div class="btn-group col-4  mb-3">
-        <select  aria-label="Тип голосования" style="display: block; margin-top: 100px;" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <option selected>Тип голосования</option>
-          <option value="1" id="one" class="dropdown-item">Один из двух</option>
+        <select aria-label="Тип голосования" style="display: block; margin-top: 100px;" id="voting_type" type="button" name="voting_type" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <option selected value="0">Тип голосования</option>
+          <option value="3" id="one" class="dropdown-item">Один из двух</option>
           <option value="2" id="alot" class="dropdown-item">Один из многих</option>
         </select>
       </div>
@@ -47,9 +47,24 @@
       document.querySelector("#variants").removeChild(inputs_arr[i])
     }
   })
-  document.querySelector("#alot").addEventListener("click", () => {
-    add.classList.remove("d-none")
-    bin_variants.classList.add("d-none")
+  document.querySelector("#voting_type").addEventListener("input", () => {
+    console.log(document.querySelector("#voting_type").value)
+    if (voting_type.value == '3') {
+      b_v1.name = "variants"
+      b_v2.name = "variants"
+      bin_variants.classList.remove("d-none")
+      add.classList.add("d-none")
+    } else if (voting_type.value == '2'){
+      b_v1.name = "variants_bin"
+      b_v2.name = "variants_bin"
+      add.classList.remove("d-none")
+      bin_variants.classList.add("d-none")
+    } else {
+      b_v1.name = "variants_bin"
+      b_v2.name = "variants_bin"
+      bin_variants.classList.add("d-none")
+      add.classList.add("d-none")
+    }
   })
   add.addEventListener('click', () =>{
     let count = 1
