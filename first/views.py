@@ -71,6 +71,22 @@ def add_voting(request):
 
 def registration(request):
     context = {}
-    return render(request, 'registration.html', context)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context['form'] = form
+            messages.add_message(request, messages.SUCCESS, "Новый пользователь создан")
+            return render(request, 'registration.html', context)
+
+        else:
+            form = UserCreationForm()
+            context['form'] = form
+            messages.add_message(request, messages.ERROR, "Введены некорректные данные")
+            return render(request, 'registration.html', context)
+    else:
+        form = UserCreationForm()
+        context['form'] = form
+        return render(request, 'registration.html', context)
 
 # Create your views here.
