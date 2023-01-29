@@ -7,10 +7,13 @@ from first.models import Voting, VoteVariant, VoteFact
 
 def voting_page(request, voting_id):
     context = {}
+    context["all_votes_count"] = 0
     context["pagetitle"] = "Голосование"
     context["pageheader"] = "Было два стула"
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
+    for el in VoteVariant.objects.filter(voting=voting_id):
+        context["all_votes_count"] += el.votes_count
     if request.method == "POST":
         is_voted = False
         for votefact in VoteFact.objects.filter(author=request.user):
