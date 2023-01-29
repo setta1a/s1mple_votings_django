@@ -51,7 +51,7 @@ def add_voting(request):
                 "variants") and request.user.is_authenticated:
             new_voting = Voting(
                 name=request.POST['theme'],
-                description=request.POST['theme'],
+                description=request.POST['description'],
                 voting_type=int(request.POST['voting_type']),
                 author=request.user,
             )
