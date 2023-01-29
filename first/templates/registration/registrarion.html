@@ -7,7 +7,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <input class="btn btn-primary col-4 offset-4" type="submit" value="Отправить">
-            <div class="form-text">Уже есть аккаунт? <a href="/login/">Войти</a></div>
+            <div class="form-text">Уже есть аккаунт? <a href="/login/" style="text-decoration: none">Войти</a></div>
         </form>
     </div>
     {% if messages %}
