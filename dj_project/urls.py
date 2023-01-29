@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
-from first.views import voting_page, list_of_votings_page, index_page, add_voting
+from first.views import voting_page, list_of_votings_page, index_page, add_voting, registration
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,12 +30,13 @@ urlpatterns = [
             "pageheader":"Авторизация"
         }
     )),
-    path('registration/', auth_views.LoginView.as_view(
-        extra_context={
-            "pagetitle": "Registration",
-            "pageheader":"Регистрация"
-        }
-    )),
+    # path('registration/', auth_views.LoginView.as_view(
+    #     extra_context={
+    #         "pagetitle": "Registration",
+    #         "pageheader":"Регистрация"
+    #     }
+    # )),
+    path('registration/', registration),
     path('logout/', auth_views.LogoutView.as_view()),
     path('add_voting/', add_voting)
 ]

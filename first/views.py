@@ -1,5 +1,7 @@
 import datetime
 
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404
 
 from first.models import Voting, VoteVariant, VoteFact
@@ -71,22 +73,21 @@ def add_voting(request):
 
 def registration(request):
     context = {}
+    context["pagetitle"] = "Registration"
+    context["pageheader"] = "Регистрация"
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             context['form'] = form
             messages.add_message(request, messages.SUCCESS, "Новый пользователь создан")
-            return render(request, 'registration.html', context)
-
         else:
             form = UserCreationForm()
             context['form'] = form
             messages.add_message(request, messages.ERROR, "Введены некорректные данные")
-            return render(request, 'registration.html', context)
     else:
         form = UserCreationForm()
         context['form'] = form
-        return render(request, 'registration.html', context)
+    return render(request, 'registration/registrarion.html', context)
 
 # Create your views here.
