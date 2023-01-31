@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
-from first.views import voting_page, list_of_votings_page, index_page, add_voting, registration, redact_voting
+from first.views import voting_page, list_of_votings_page, index_page, add_voting, registration, redact_voting, profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,5 +39,6 @@ urlpatterns = [
     path('registration/', registration),
     path('logout/', auth_views.LogoutView.as_view()),
     path('add_voting/', add_voting),
-    path('redact/<int:voting_id>/', redact_voting)
+    path('redact/<int:voting_id>/', redact_voting),
+    path('profile', profile)
 ]

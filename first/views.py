@@ -94,7 +94,7 @@ def registration(request):
 def redact_voting(request, voting_id):
     context = {}
     context['voting'] = get_object_or_404(Voting, id=voting_id)
-    context['variants'] = VoteVariant.objects.filter(voting_id = voting_id)
+    context['variants'] = VoteVariant.objects.filter(voting_id=voting_id)
     if request.method == "POST":
         print(request.POST)
         if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
@@ -105,7 +105,7 @@ def redact_voting(request, voting_id):
             voting_tochange.description = request.POST['description']
             voting_tochange.save()
 
-            VoteVariant.objects.filter(voting_id = voting_id).delete()
+            VoteVariant.objects.filter(voting_id=voting_id).delete()
             for variant in request.POST.getlist("variants"):
                 new_variant = VoteVariant(
                     description=variant,
@@ -114,4 +114,8 @@ def redact_voting(request, voting_id):
                 new_variant.save()
     return render(request, 'redact_voting.html', context)
 
+
+def profile(request):
+    context = {}
+    return render(request, "profile.html", context)
 # Create your views here.

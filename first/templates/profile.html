@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <form method="post" action="/add_voting/" class="col-6 offset-3 mb-3">
+            {% csrf_token %}
+            <img src="avatar.png" alt="" class="col-2 rounded mx-auto d-block">
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+
+{% endblock %}
