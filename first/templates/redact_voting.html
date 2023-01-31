@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3">
+            {% csrf_token %}
+            <div class="btn-group col-4  mb-3">
+                <select aria-label="Тип голосования" style="display: block; margin-top: 100px;" id="voting_type"
+                        type="button" name="voting_type" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <option selected value="0">Тип голосования</option>
+                    <option value="3" id="one" class="dropdown-item">Один из двух</option>
+                    <option value="2" id="alot" class="dropdown-item">Один из многих</option>
+                </select>
+            </div>
+            <label class="form-label">Введите параметры голосования</label>
+            <input type="text" class="form-control" id="theme" placeholder="Тема голосования" value="{{voting.name}}" name="theme">
+            <input type="text" class="form-control" id="description" placeholder="Описание голосования" value="{{voting.description}}" name="description">
+            <div id="emailHelp" class="form-text">Вы можете узнать у других пользователей их мнение по любому вопросу.
+                Надо всего лишь создать голосование
+            </div>
+            <button id="add" type="button" class="btn btn-primary d-none">Добавить вариант ответа +</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col offset-0" id="variants"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col d-none" id="bin_variants">
+                        <input type="text" class="form-control" id="b_v1" placeholder="Вариант 1">
+                        <input type="text" class="form-control" id="b_v2" placeholder="Вариант 2">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Редактировать</button>
+        </form>
+    </div>
+</div>
+
+<script>
+  'use strict'
+  let one = false
+  let alot = false
+  let inputs_arr = []
+  let bin_inputs_arr = []
+  document.querySelector("#one").addEventListener("click", () => {
+    bin_variants.classList.remove("d-none")
+    add.classList.add("d-none")
+    for (let i = 0; i < inputs_arr.length; ++i){
+      document.querySelector("#variants").removeChild(inputs_arr[i])
+    }
+  })
+  document.querySelector("#voting_type").addEventListener("input", () => {
+    console.log(document.querySelector("#voting_type").value)
+    if (voting_type.value == '3') {
+      b_v1.name = "variants"
+      b_v2.name = "variants"
+      bin_variants.classList.remove("d-none")
+      add.classList.add("d-none")
+    } else if (voting_type.value == '2'){
+      b_v1.name = "variants_bin"
+      b_v2.name = "variants_bin"
+      add.classList.remove("d-none")
+      bin_variants.classList.add("d-none")
+    } else {
+      b_v1.name = "variants_bin"
+      b_v2.name = "variants_bin"
+      bin_variants.classList.add("d-none")
+      add.classList.add("d-none")
+    }
+  })
+  add.addEventListener('click', () =>{
+    let count = 1
+
+    let input = document.createElement("input")
+    input.classList.add("form-control")
+    input.placeholder = `Ответ`
+    input.name = "variants"
+    inputs_arr.push(input)
+    document.querySelector("#variants").appendChild(input)
+    count++
+  })
+  
+
+</script>
+
+
+{% endblock %}

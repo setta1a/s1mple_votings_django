@@ -90,4 +90,10 @@ def registration(request):
         context['form'] = form
     return render(request, 'registration/registrarion.html', context)
 
+
+def redact_voting(request, voting_id):
+    context = {}
+    context['voting'] = get_object_or_404(Voting, id=voting_id)
+    return render(request, 'redact_voting.html', context)
+
 # Create your views here.
