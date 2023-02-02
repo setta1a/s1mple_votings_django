@@ -97,21 +97,26 @@ def redact_voting(request, voting_id):
     context['variants'] = VoteVariant.objects.filter(voting_id=voting_id)
     if request.method == "POST":
         print(request.POST)
-        if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
-                "variants") and request.user.is_authenticated and request.POST['description']:
+        if (int(request.POST['voting_type']) or request.POST['theme'] or request.POST.get(
+                "variants") or request.POST['description'])  and context['voting'].author == request.user:
             voting_tochange = Voting.objects.get(id=voting_id)
             voting_tochange.voting_type = int(request.POST['voting_type'])
             voting_tochange.name = request.POST['theme']
             voting_tochange.description = request.POST['description']
             voting_tochange.save()
-
-            VoteVariant.objects.filter(voting_id=voting_id).delete()
+            flag = True
             for variant in request.POST.getlist("variants"):
-                new_variant = VoteVariant(
-                    description=variant,
-                    voting=voting_tochange,
-                )
-                new_variant.save()
+                if not variant:
+                    flag = False
+            if flag:
+                VoteVariant.objects.filter(voting_id=voting_id).delete()
+                for variant in request.POST.getlist("variants"):
+                    new_variant = VoteVariant(
+                        description=variant,
+                        voting=voting_tochange,
+                    )
+                    new_variant.save()
+
     return render(request, 'redact_voting.html', context)
 
 
