@@ -123,4 +123,9 @@ def redact_voting(request, voting_id):
 def profile(request):
     context = {}
     return render(request, "profile.html", context)
+
+
+def redact_profile(request):
+    context = {}
+    return render(request, "redact_profile.html", context)
 # Create your views here.
