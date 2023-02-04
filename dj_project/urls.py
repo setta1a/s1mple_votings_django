@@ -40,6 +40,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view()),
     path('add_voting/', add_voting),
     path('redact/<int:voting_id>/', redact_voting),
-    path('profile', profile),
-    path('redact_profile/', redact_profile)
+    path('profile/<int:profile_id>/', profile),
+    path('redact_profile/<int:redact_profile_id>/', redact_profile)
 ]

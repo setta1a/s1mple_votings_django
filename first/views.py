@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
 from first.models import Voting, VoteVariant, VoteFact
@@ -98,7 +99,7 @@ def redact_voting(request, voting_id):
     if request.method == "POST":
         print(request.POST)
         if (int(request.POST['voting_type']) or request.POST['theme'] or request.POST.get(
-                "variants") or request.POST['description'])  and context['voting'].author == request.user:
+                "variants") or request.POST['description']) and context['voting'].author == request.user:
             voting_tochange = Voting.objects.get(id=voting_id)
             voting_tochange.voting_type = int(request.POST['voting_type'])
             voting_tochange.name = request.POST['theme']
@@ -120,12 +121,20 @@ def redact_voting(request, voting_id):
     return render(request, 'redact_voting.html', context)
 
 
-def profile(request):
+def profile(request, profile_id):
     context = {}
+    profile = User.objects.get(id=profile_id)
+    context["profile"] = profile
     return render(request, "profile.html", context)
 
 
-def redact_profile(request):
+def redact_profile(request, redact_profile_id):
     context = {}
+    if request.method == "POST":
+        profile = User.objects.get(id=redact_profile_id)
+        profile.last_name = request.POST["last_name"]
+        profile.email = request.POST["email"]
+        profile.save()
+
     return render(request, "redact_profile.html", context)
 # Create your views here.
