@@ -132,9 +132,17 @@ def redact_profile(request, redact_profile_id):
     context = {}
     if request.method == "POST":
         profile = User.objects.get(id=redact_profile_id)
+        context["profile"] = profile
         profile.last_name = request.POST["last_name"]
         profile.email = request.POST["email"]
         profile.save()
+    elif request.method == "GET":
+        context["profile"] = User.objects.get(id=redact_profile_id)
 
     return render(request, "redact_profile.html", context)
+
+
+def complaint(request):
+    context = {}
+    return render(request, "complaint.html", context)
 # Create your views here.

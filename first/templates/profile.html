@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section style="background-color: #eee;" class="m-5">
+<section style="background-color: #eee; border: 2px solid #cacaca; border-radius: 40px;margin: 50px;" class="m-20">
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
@@ -9,7 +9,7 @@
           <div class="card-body text-center">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">Сеня Аникин</h5>
+            <h5 class="my-3">{{profile.last_name}}</h5>
             <p class="text-muted mb-1">Full Sack Developer</p>
             <p class="text-muted mb-4"> Donetsk</p>
             <div class="d-flex justify-content-center mb-2">
@@ -75,6 +75,8 @@
                 <p class="text-muted mb-0">89774345266</p>
               </div>
             </div>
+            <hr>
+            <a class="btn btn-primary" href="/redact_profile/{{profile.id}}/" type="button" value="Редактировать">Редактировать</a>
           </div>
         </div>
       </div>
