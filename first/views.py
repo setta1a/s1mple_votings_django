@@ -24,12 +24,13 @@ def voting_page(request, voting_id):
                 is_voted = True
                 context["is_voted"] = is_voted
                 break
-
+        print(request.POST)
         if request.user.is_authenticated and not is_voted:
-            record = VoteFact(variant_id=request.POST['variant_id'],
-                              created_at=datetime.datetime.now(),
-                              author=request.user)
-            record.save()
+            for var_id in request.POST.getlist('variant_id'):
+                record = VoteFact(variant_id=int(var_id),
+                                  created_at=datetime.datetime.now(),
+                                  author=request.user)
+                record.save()
 
     return render(request, 'voting.html', context)
 
