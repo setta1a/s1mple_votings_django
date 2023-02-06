@@ -10,6 +10,9 @@ Welcome to S1mple_votings's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   user.rst
+   code.rst
+
 
 
 Indices and tables
