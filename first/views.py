@@ -56,12 +56,15 @@ def add_voting(request):
         print(request.POST)
         if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
                 "variants") and request.user.is_authenticated and request.POST['description']:
+            print(request.POST)
             new_voting = Voting(
                 name=request.POST['theme'],
                 description=request.POST['description'],
                 voting_type=int(request.POST['voting_type']),
                 author=request.user,
+                image=request.POST['image'],
             )
+
             new_voting.save()
             for variant in request.POST.getlist("variants"):
                 new_variant = VoteVariant(
