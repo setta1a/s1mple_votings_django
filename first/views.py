@@ -53,16 +53,14 @@ def index_page(request):
 def add_voting(request):
     context = {}
     if request.method == "POST":
-        print(request.POST)
         if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
                 "variants") and request.user.is_authenticated and request.POST['description']:
-            print(request.POST)
             new_voting = Voting(
                 name=request.POST['theme'],
                 description=request.POST['description'],
                 voting_type=int(request.POST['voting_type']),
                 author=request.user,
-                image=request.POST['image'],
+                image=request.FILES['image'],
             )
 
             new_voting.save()
