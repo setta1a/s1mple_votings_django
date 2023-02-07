@@ -28,10 +28,18 @@
             </div>
             <div class="container">
                 <div class="row">
+                  {% if voting.voting_type == 2 %}
                     <div class="col d-none" id="bin_variants">
                         <input type="text" class="form-control" id="b_v1" placeholder="Вариант 1">
                         <input type="text" class="form-control" id="b_v2" placeholder="Вариант 2">
                     </div>
+                  {% endif %}
+                  {% if voting.voting_type == 3 %}
+                    <button id="add" type="button" class="btn btn-primary">Добавить вариант ответа +</button>
+                    {% for variant in variants %}
+                      <input type="text" class="form-control" placeholder="Ответ" value="{{variant.description}}">
+                    {% endfor %}
+                  {% endif %}
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Редактировать</button>
