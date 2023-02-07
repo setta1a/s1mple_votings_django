@@ -9,6 +9,13 @@ from first.models import Voting, VoteVariant, VoteFact
 
 
 def voting_page(request, voting_id):
+    """
+        Обработчик страницы голосования
+
+        :param request: объект с деталями HTTP-запроса
+        :param voting_id: id голосования
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     context["all_votes_count"] = 0
     context["pagetitle"] = "Голосование"
@@ -36,6 +43,12 @@ def voting_page(request, voting_id):
 
 
 def list_of_votings_page(request):
+    """
+        Обработчик страницы списка голосований
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     context["pagetitle"] = "List of votings"
     context["pageheader"] = "Все голосования"
@@ -44,6 +57,12 @@ def list_of_votings_page(request):
 
 
 def index_page(request):
+    """
+        Обработчик начальной страницы
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     context["pagetitle"] = "Index page"
     context["pageheader"] = "Главная"
@@ -51,6 +70,12 @@ def index_page(request):
 
 
 def add_voting(request):
+    """
+        Обработчик страницы добавления голосования
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     if request.method == "POST":
         print(request.POST)
@@ -74,6 +99,12 @@ def add_voting(request):
 
 
 def registration(request):
+    """
+        Обработчик страницы регистрации
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     context["pagetitle"] = "Registration"
     context["pageheader"] = "Регистрация"
@@ -94,6 +125,13 @@ def registration(request):
 
 
 def redact_voting(request, voting_id):
+    """
+        Обработчик страницы редактирования голосования
+
+        :param request: объект с деталями HTTP-запроса
+        :param voting_id: id голосования для редактирования
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context['variants'] = VoteVariant.objects.filter(voting_id=voting_id)
@@ -123,13 +161,26 @@ def redact_voting(request, voting_id):
 
 
 def profile(request, profile_id):
+    """
+        Страница профиля пользователя
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     profile = User.objects.get(id=profile_id)
     context["profile"] = profile
     return render(request, "profile.html", context)
 
 
+
 def redact_profile(request, redact_profile_id):
+    """
+        Обработчик страницы редактирования профиля
+
+        :param request: объект с деталями HTTP-запроса
+        :return: Объект с деталями HTTP-ответа
+    """
     context = {}
     if request.method == "POST":
         profile = User.objects.get(id=redact_profile_id)
