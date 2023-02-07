@@ -169,6 +169,8 @@ def profile(request, profile_id):
     """
     context = {}
     profile = User.objects.get(id=profile_id)
+    context["votings"] = Voting.objects.filter(author = profile_id)
+    context["votefacts"] = VoteFact.objects.filter(author=profile_id)
     context["profile"] = profile
     return render(request, "profile.html", context)
 
