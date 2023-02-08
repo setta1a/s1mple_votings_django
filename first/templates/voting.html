@@ -67,7 +67,9 @@
             {% if is_voted %}
                 <p>Пользователь уже голосовал!</p>
                 <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar w-50"></div>
+                    {% for variant in votes_percent %}
+                        <div class="progress-bar" role="progressbar" style="width: {{variant}}%; border-right: 3px solid black" aria-valuenow="variant.votes_count/all_votes_count*100" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% endfor %}
                 </div>
             {% endif %}
         </div>

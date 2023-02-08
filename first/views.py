@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -18,12 +19,20 @@ def voting_page(request, voting_id):
     """
     context = {}
     context["all_votes_count"] = 0
+    votes_percent = []
+    iter_arr = []
+    colors = ["green", "red", "purple", "blue", "white", "pink", "yellow"]
+    variant_colors = []
     context["pagetitle"] = "Голосование"
     context["pageheader"] = "Было два стула"
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
+    for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
+        votes_percent.append(VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context["all_votes_count"] * 100)
+        variant_colors.append(colors[random.randint(0,len(colors))])
+        iter_arr.append(i)
     if request.method == "POST":
         is_voted = False
         for votefact in VoteFact.objects.filter(author=request.user):
@@ -38,6 +47,9 @@ def voting_page(request, voting_id):
                                   created_at=datetime.datetime.now(),
                                   author=request.user)
                 record.save()
+
+    context["colors"] = variant_colors
+    context["votes_percent"] = votes_percent
 
     return render(request, 'voting.html', context)
 
