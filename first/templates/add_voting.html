@@ -12,6 +12,7 @@
                     <option selected value="0">Тип голосования</option>
                     <option value="3" id="one" class="dropdown-item">Один из двух</option>
                     <option value="2" id="alot" class="dropdown-item">Один из многих</option>
+                    <option value="1" id="manylot" class="dropdown-item">Многие из многих</option>
                 </select>
             </div>
             <label class="form-label">Введите параметры голосования</label>
@@ -59,7 +60,7 @@
       b_v2.name = "variants"
       bin_variants.classList.remove("d-none")
       add.classList.add("d-none")
-    } else if (voting_type.value == '2'){
+    } else if (voting_type.value == '2' || voting_type.value == '1'){
       b_v1.name = "variants_bin"
       b_v2.name = "variants_bin"
       add.classList.remove("d-none")
