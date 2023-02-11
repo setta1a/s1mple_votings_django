@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3">
+        <form method="post" action="/add_voting/" class="col-4 offset-4 mb-3" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="btn-group col-4  mb-3">
                 <select aria-label="Тип голосования" style="display: block; margin-top: 100px;" id="voting_type"
@@ -15,6 +15,8 @@
                     <option value="1" id="manylot" class="dropdown-item">Многие из многих</option>
                 </select>
             </div>
+            <label class="form-label">Введите фотографию голосования</label>
+            <input type="file" class="form-control" id="image" placeholder="фотография" name="image">
             <label class="form-label">Введите параметры голосования</label>
             <input type="text" class="form-control" id="theme" placeholder="Тема голосования" name="theme">
             <input type="text" class="form-control" id="description" placeholder="Описание голосования" name="description">
