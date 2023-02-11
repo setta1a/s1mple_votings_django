@@ -5,16 +5,7 @@
     <div class="row">
         <form method="post" action="/redact/{{ voting.id }}/" class="col-4 offset-4 mb-3">
             {% csrf_token %}
-            <div class="btn-group col-4  mb-3">
-                <select aria-label="Тип голосования" style="display: block; margin-top: 100px;" id="voting_type"
-                        type="button" name="voting_type" class="btn btn-secondary dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    <option selected value="0">Тип голосования</option>
-                    <option value="3" id="one" class="dropdown-item">Один из двух</option>
-                    <option value="2" id="alot" class="dropdown-item">Один из многих</option>
-                </select>
-            </div>
-            <label class="form-label">Введите параметры голосования</label>
+            <label class="form-label mt-5">Введите параметры голосования</label>
             <input type="text" class="form-control" id="theme" placeholder="Тема голосования" value="{{voting.name}}" name="theme">
             <input type="text" class="form-control" id="description" placeholder="Описание голосования" value="{{voting.description}}" name="description">
             <div id="emailHelp" class="form-text">Вы можете узнать у других пользователей их мнение по любому вопросу.

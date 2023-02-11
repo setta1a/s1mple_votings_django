@@ -22,5 +22,5 @@ urlpatterns = [
     path('redact/<int:voting_id>/', redact_voting),
     path('profile/<int:profile_id>/', profile),
     path('redact_profile/<int:redact_profile_id>/', redact_profile),
-    path('comlaint/', complaint)
+    path('complaint/', complaint)
 ]
