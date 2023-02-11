@@ -2,11 +2,12 @@ import datetime
 import random
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
-from first.models import Voting, VoteVariant, VoteFact
+from first.models import Voting, VoteVariant, VoteFact, Complaint
 
 
 def voting_page(request, voting_id):
@@ -90,6 +91,7 @@ def index_page(request):
     return render(request, 'index.html', context)
 
 
+@login_required(login_url='/registration/')
 def add_voting(request):
     """
         Обработчик страницы добавления голосования
@@ -146,6 +148,7 @@ def registration(request):
     return render(request, 'registration/registrarion.html', context)
 
 
+@login_required(login_url='/registration/')
 def redact_voting(request, voting_id):
     """
         Обработчик страницы редактирования голосования
@@ -217,7 +220,17 @@ def redact_profile(request, redact_profile_id):
     return render(request, "redact_profile.html", context)
 
 
+@login_required(login_url='/registration/')
 def complaint(request):
     context = {}
+    if request.method == "POST":
+        if request.POST.get('title') and request.POST.get('description'):
+            complaint = Complaint(
+                name = request.POST['title'],
+                description = request.POST['description'],
+                author = request.user,
+                created_at = datetime.datetime.now()
+            )
+            complaint.save()
     return render(request, "complaint.html", context)
 # Create your views here.

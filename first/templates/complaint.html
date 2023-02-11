@@ -4,13 +4,14 @@
 <div class="conteiner">
     <div class="row">
         <form class="col-8 offset-2 form" style="margin-top: 10vh;" method="POST" action="">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Причина жалобы</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Напишите причину жалобы">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Напишите причину жалобы" name="title">
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Опишите подробнее причину жалобы</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
               </div>
               <input type="submit" class="btn btn-primary" value="Отправить">
         </form>
