@@ -22,16 +22,18 @@ def voting_page(request, voting_id):
     votes_percent = []
     iter_arr = []
     colors = ["green", "red", "purple", "blue", "white", "pink", "yellow"]
+    colors_styles = ["progress-bar", "progress-bar bg-success", "progress-bar bg-info", "progress-bar bg-warning", "progress-bar bg-danger"]
     variant_colors = []
     context["pagetitle"] = "Голосование"
     context["pageheader"] = "Было два стула"
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
+    context['styles'] = colors_styles[:len(context["voting_variants"])]
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
     for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
-        votes_percent.append(VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context["all_votes_count"] * 100)
-        variant_colors.append(colors[random.randint(0,len(colors))])
+        #votes_percent.append(VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context["all_votes_count"] * 100)
+        #variant_colors.append(colors[random.randint(0,len(colors))])
         iter_arr.append(i)
     if request.method == "POST":
         is_voted = False
