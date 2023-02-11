@@ -48,19 +48,21 @@
                     {% for variant in voting_variants %}
                         <div>
                             {% if request.user.is_authenticated %}
-                            <input class="btn btn-primary btn-lg m-2" name="variant_id" value="{{ variant.id }}" id="variant_id_{{ variant.id }}" type="checkbox">
+                            <input class="btn form-check-input  btn-primary btn-lg m-2" name="variant_id" value="{{ variant.id }}" id="variant_id_{{ variant.id }}" type="checkbox">
                             <label for="variant_id_{{ variant.id }}">{{ variant.description }}</label>
                             {% else %}
                                 <button class="btn btn-primary disabled btn-lg m-2" name="variant_id" value="{{ variant.id }}">
                                     {{ variant.description }}
                                 </button>
                             {% endif %}
-                            <label> {{ variant.votes_count }} </label>
+                            {% if is_voted %}
+                                <label> {{ variant.votes_count }} </label>
+                            {% endif %}
                             <br>
                         </div>
 
                     {% endfor %}
-                    <input type="submit">
+                    <input class="btn btn-primary" type="submit" value="Отправить">
                 {% endif %}
             </form>
             <p>Автор: {{ voting.author }} </p>
