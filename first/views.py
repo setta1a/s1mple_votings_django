@@ -17,12 +17,18 @@ def voting_page(request, voting_id):
         :param voting_id: id голосования
         :return: Объект с деталями HTTP-ответа
     """
+
+    class Progress:
+        def __init__(self, color, procent):
+            self.color = color
+            self.procent = procent
+
     context = {}
     context["all_votes_count"] = 0
     votes_percent = []
-    iter_arr = []
-    colors = ["green", "red", "purple", "blue", "white", "pink", "yellow"]
-    colors_styles = ["progress-bar", "progress-bar bg-success", "progress-bar bg-info", "progress-bar bg-warning", "progress-bar bg-danger"]
+    obj_arr = []
+    colors_styles = ["progress-bar", "progress-bar bg-success", "progress-bar bg-info", "progress-bar bg-warning",
+                     "progress-bar bg-danger"]
     variant_colors = []
     context["pagetitle"] = "Голосование"
     context["pageheader"] = "Было два стула"
@@ -32,9 +38,9 @@ def voting_page(request, voting_id):
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
     for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
-        #votes_percent.append(VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context["all_votes_count"] * 100)
-        #variant_colors.append(colors[random.randint(0,len(colors))])
-        iter_arr.append(i)
+        obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
+                                VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
+                                    "all_votes_count"] * 100))
     if request.method == "POST":
         is_voted = False
         for votefact in VoteFact.objects.filter(author=request.user):
@@ -52,6 +58,7 @@ def voting_page(request, voting_id):
 
     context["colors"] = variant_colors
     context["votes_percent"] = votes_percent
+    context["progress"] = obj_arr
 
     return render(request, 'voting.html', context)
 
@@ -185,7 +192,6 @@ def profile(request, profile_id):
     profile = User.objects.get(id=profile_id)
     context["profile"] = profile
     return render(request, "profile.html", context)
-
 
 
 def redact_profile(request, redact_profile_id):
