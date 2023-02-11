@@ -66,9 +66,11 @@
             <p>Автор: {{ voting.author }} </p>
             {% if is_voted %}
                 <p>Пользователь уже голосовал!</p>
-                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar w-50"></div>
-                </div>
+                {% for obj in progress %}
+                <div class="progress">
+                        <div class="{{ obj.color }}" role="progressbar" style="width: {{obj.procent}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                </div><br>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
