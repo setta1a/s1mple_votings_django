@@ -4,7 +4,7 @@ import random
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from first.models import Voting, VoteVariant, VoteFact
 
@@ -38,9 +38,13 @@ def voting_page(request, voting_id):
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
     for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
-        obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
-                                VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
-                                    "all_votes_count"] * 100))
+        if context["all_votes_count"]:
+            obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
+                                    VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
+                                        "all_votes_count"] * 100))
+        else:
+            obj_arr.append(Progress(colors_styles[random.randint(0, 4)], 0))
+
     if request.method == "POST":
         is_voted = False
         for votefact in VoteFact.objects.filter(author=request.user):
@@ -159,25 +163,35 @@ def redact_voting(request, voting_id):
     context['variants'] = VoteVariant.objects.filter(voting_id=voting_id)
     if request.method == "POST":
         print(request.POST)
-        if (int(request.POST['voting_type']) or request.POST['theme'] or request.POST.get(
-                "variants") or request.POST['description']) and context['voting'].author == request.user:
-            voting_tochange = Voting.objects.get(id=voting_id)
-            voting_tochange.voting_type = int(request.POST['voting_type'])
+        voting_tochange = Voting.objects.get(id=voting_id)
+        if request.POST['theme'] != context['voting'].name:
             voting_tochange.name = request.POST['theme']
+
+        if request.POST['description'] != context['voting'].description:
             voting_tochange.description = request.POST['description']
-            voting_tochange.save()
-            flag = True
-            for variant in request.POST.getlist("variants"):
-                if not variant:
-                    flag = False
-            if flag:
-                VoteVariant.objects.filter(voting_id=voting_id).delete()
-                for variant in request.POST.getlist("variants"):
-                    new_variant = VoteVariant(
-                        description=variant,
-                        voting=voting_tochange,
-                    )
-                    new_variant.save()
+
+        voting_tochange.save()
+        variants = []
+        for key, value in request.POST.items():
+            if key[:7] == "variant":
+                variants.append((request.POST[key], int(key[8:])))
+        print(variants)
+        for variant in variants:
+            if not variant[0]:
+                VoteVariant.objects.get(id=variant[1]).delete()
+            elif variant[0] != VoteVariant.objects.get(id=variant[1]).description:
+                new_variant = VoteVariant.objects.get(id=variant[1])
+                new_variant.description = variant[0]
+                new_variant.save()
+
+    else:
+        for variant in context['variants']:
+            if VoteFact.objects.filter(variant=variant.id).count() != 0:
+                return redirect("/list/")
+
+        if context['voting'].author != request.user:
+            return redirect("/list/")
+
 
     return render(request, 'redact_voting.html', context)
 
