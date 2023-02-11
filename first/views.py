@@ -38,9 +38,10 @@ def voting_page(request, voting_id):
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
     for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
-        obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
-                                VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
-                                    "all_votes_count"] * 100))
+        if context["all_votes_count"] > 0:
+            obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
+                                    VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
+                                        "all_votes_count"] * 100))
     if request.method == "POST":
         is_voted = False
         for votefact in VoteFact.objects.filter(author=request.user):
