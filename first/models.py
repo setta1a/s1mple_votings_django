@@ -25,3 +25,12 @@ class VoteFact(models.Model):
     author = models.ForeignKey(to=User, on_delete=models.CASCADE, default=1)
     variant = models.ForeignKey(to=VoteVariant, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField()
+
+
+class Complaint(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+    author = models.ForeignKey(to=User, on_delete=models.CASCADE, default=1)
+    created_at = models.DateTimeField()
+
+
