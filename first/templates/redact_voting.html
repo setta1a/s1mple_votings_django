@@ -6,13 +6,25 @@
         <form method="post" action="/redact/{{ voting.id }}/" class="col-4 offset-4 mb-3">
             {% csrf_token %}
             <div class="btn-group col-4  mb-3">
-                <select aria-label="Тип голосования" style="display: block; margin-top: 100px;" id="voting_type"
+                {% if voting.voting_type == 3 %}
+                <select aria-label="Один из двух" style="display: block; margin-top: 100px;" id="voting_type"
                         type="button" name="voting_type" class="btn btn-secondary dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                    <option selected value="0">Тип голосования</option>
-                    <option value="3" id="one" class="dropdown-item">Один из двух</option>
-                    <option value="2" id="alot" class="dropdown-item">Один из многих</option>
                 </select>
+                {% endif %}
+                {% if voting.voting_type == 2 %}
+                <select aria-label="Один из многих" style="display: block; margin-top: 100px;" id="voting_type"
+                        type="button" name="voting_type" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                </select>
+                {% endif %}
+                {% if voting.voting_type == 1 %}
+                <select aria-label="Много из многих" style="display: block; margin-top: 100px;" id="voting_type"
+                        type="button" name="voting_type" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                </select>
+                {% endif %}
+
             </div>
             <label class="form-label">Введите параметры голосования</label>
             <input type="text" class="form-control" id="theme" placeholder="Тема голосования" value="{{voting.name}}" name="theme">
