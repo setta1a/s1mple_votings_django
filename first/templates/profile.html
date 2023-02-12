@@ -63,6 +63,29 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <table class="table">
+        <tr>
+          <td>Событие</td>
+          <td>Объект события</td>
+          <td>ID объекта</td>
+        </tr>
+        {% for voting in votings %}
+        <tr>
+          <td>Создание голосования</td>
+          <td>{{ voting.name }}</td>
+          <td>{{ voting.id }}</td>
+        </tr>
+        {% endfor %}
+        {% for fact in votefacts %}
+        <tr>
+          <td>Голосование зa вариант</td>
+          <td>{{ fact.variant.description }}</td>
+          <td>{{ fact.variant.id }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 </section>
 {% endblock %}

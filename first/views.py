@@ -2,11 +2,12 @@ import datetime
 import random
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from first.models import Voting, VoteVariant, VoteFact
+from first.models import Voting, VoteVariant, VoteFact, Complaint
 
 
 def voting_page(request, voting_id):
@@ -17,29 +18,42 @@ def voting_page(request, voting_id):
         :param voting_id: id голосования
         :return: Объект с деталями HTTP-ответа
     """
+
+    class Progress:
+        def __init__(self, color, procent):
+            self.color = color
+            self.procent = procent
+
     context = {}
     context["all_votes_count"] = 0
     votes_percent = []
-    iter_arr = []
-    colors = ["green", "red", "purple", "blue", "white", "pink", "yellow"]
+    obj_arr = []
+    colors_styles = ["progress-bar", "progress-bar bg-success", "progress-bar bg-info", "progress-bar bg-warning",
+                     "progress-bar bg-danger"]
     variant_colors = []
     context["pagetitle"] = "Голосование"
     context["pageheader"] = "Было два стула"
     context['voting'] = get_object_or_404(Voting, id=voting_id)
     context["voting_variants"] = VoteVariant.objects.filter(voting=voting_id)
+    context['styles'] = colors_styles[:len(context["voting_variants"])]
     for el in VoteVariant.objects.filter(voting=voting_id):
         context["all_votes_count"] += el.votes_count
     for i in range(len(VoteVariant.objects.filter(voting=voting_id))):
-        votes_percent.append(VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context["all_votes_count"] * 100)
-        variant_colors.append(colors[random.randint(0,len(colors))])
-        iter_arr.append(i)
+        if context["all_votes_count"] > 0:
+            obj_arr.append(Progress(colors_styles[random.randint(0, 4)],
+                                    VoteVariant.objects.filter(voting=voting_id)[i].votes_count / context[
+                                        "all_votes_count"] * 100))
+        else:
+            obj_arr.append(Progress(colors_styles[random.randint(0, 4)], 0))
+
+    is_voted = False
+    for votefact in VoteFact.objects.filter(author=request.user):
+        if VoteVariant.objects.filter(id=votefact.variant_id).filter(voting_id=voting_id).count() != 0:
+            is_voted = True
+            context["is_voted"] = is_voted
+            break
+
     if request.method == "POST":
-        is_voted = False
-        for votefact in VoteFact.objects.filter(author=request.user):
-            if VoteVariant.objects.filter(id=votefact.variant_id).filter(voting_id=voting_id).count() != 0:
-                is_voted = True
-                context["is_voted"] = is_voted
-                break
         print(request.POST)
         if request.user.is_authenticated and not is_voted:
             for var_id in request.POST.getlist('variant_id'):
@@ -50,6 +64,7 @@ def voting_page(request, voting_id):
 
     context["colors"] = variant_colors
     context["votes_percent"] = votes_percent
+    context["progress"] = obj_arr
 
     return render(request, 'voting.html', context)
 
@@ -81,6 +96,7 @@ def index_page(request):
     return render(request, 'index.html', context)
 
 
+@login_required(login_url='/registration/')
 def add_voting(request):
     """
         Обработчик страницы добавления голосования
@@ -90,7 +106,6 @@ def add_voting(request):
     """
     context = {}
     if request.method == "POST":
-        print(request.POST)
         if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
                 "variants") and request.user.is_authenticated and request.POST['description']:
             new_voting = Voting(
@@ -98,7 +113,9 @@ def add_voting(request):
                 description=request.POST['description'],
                 voting_type=int(request.POST['voting_type']),
                 author=request.user,
+                image=request.FILES['image'],
             )
+
             new_voting.save()
             for variant in request.POST.getlist("variants"):
                 new_variant = VoteVariant(
@@ -136,6 +153,7 @@ def registration(request):
     return render(request, 'registration/registrarion.html', context)
 
 
+@login_required(login_url='/registration/')
 def redact_voting(request, voting_id):
     """
         Обработчик страницы редактирования голосования
@@ -149,25 +167,35 @@ def redact_voting(request, voting_id):
     context['variants'] = VoteVariant.objects.filter(voting_id=voting_id)
     if request.method == "POST":
         print(request.POST)
-        if (int(request.POST['voting_type']) or request.POST['theme'] or request.POST.get(
-                "variants") or request.POST['description']) and context['voting'].author == request.user:
-            voting_tochange = Voting.objects.get(id=voting_id)
-            voting_tochange.voting_type = int(request.POST['voting_type'])
+        voting_tochange = Voting.objects.get(id=voting_id)
+        if request.POST['theme'] != context['voting'].name:
             voting_tochange.name = request.POST['theme']
+
+        if request.POST['description'] != context['voting'].description:
             voting_tochange.description = request.POST['description']
-            voting_tochange.save()
-            flag = True
-            for variant in request.POST.getlist("variants"):
-                if not variant:
-                    flag = False
-            if flag:
-                VoteVariant.objects.filter(voting_id=voting_id).delete()
-                for variant in request.POST.getlist("variants"):
-                    new_variant = VoteVariant(
-                        description=variant,
-                        voting=voting_tochange,
-                    )
-                    new_variant.save()
+
+        voting_tochange.save()
+        variants = []
+        for key, value in request.POST.items():
+            if key[:7] == "variant":
+                variants.append((request.POST[key], int(key[8:])))
+        print(variants)
+        for variant in variants:
+            if not variant[0]:
+                VoteVariant.objects.get(id=variant[1]).delete()
+            elif variant[0] != VoteVariant.objects.get(id=variant[1]).description:
+                new_variant = VoteVariant.objects.get(id=variant[1])
+                new_variant.description = variant[0]
+                new_variant.save()
+
+    else:
+        for variant in context['variants']:
+            if VoteFact.objects.filter(variant=variant.id).count() != 0:
+                return redirect("/list/")
+
+        if context['voting'].author != request.user:
+            return redirect("/list/")
+
 
     return render(request, 'redact_voting.html', context)
 
@@ -181,9 +209,10 @@ def profile(request, profile_id):
     """
     context = {}
     profile = User.objects.get(id=profile_id)
+    context["votings"] = Voting.objects.filter(author = profile_id)
+    context["votefacts"] = VoteFact.objects.filter(author=profile_id)
     context["profile"] = profile
     return render(request, "profile.html", context)
-
 
 
 def redact_profile(request, redact_profile_id):
@@ -206,7 +235,17 @@ def redact_profile(request, redact_profile_id):
     return render(request, "redact_profile.html", context)
 
 
+@login_required(login_url='/registration/')
 def complaint(request):
     context = {}
+    if request.method == "POST":
+        if request.POST.get('title') and request.POST.get('description'):
+            complaint = Complaint(
+                name = request.POST['title'],
+                description = request.POST['description'],
+                author = request.user,
+                created_at = datetime.datetime.now()
+            )
+            complaint.save()
     return render(request, "complaint.html", context)
 # Create your views here.
