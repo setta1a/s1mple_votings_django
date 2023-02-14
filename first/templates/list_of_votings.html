@@ -5,7 +5,7 @@
     <div class="row">
         {% for voting in votings_list %}
         <div class="col-4">
-            <div class="card p-2 m-1" style="background-image: url('../media/{{voting.image}}'); background-size: cover">
+            <div class="card p-2 m-1" style="background-image: url('../media/{{voting.image}}'); background-size: cover;">
                 <h3 class="subtitle text-decoration-none"> <a style="text-decoration: none" href="{% url 'voting_details' voting.id %}">{{ voting.name }}</a> </h3>
                 <p>Описание: {{ voting.description }}</p>
                 <p>Автор: {{ voting.author }}</p>
