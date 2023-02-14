@@ -46,12 +46,16 @@ def voting_page(request, voting_id):
         else:
             obj_arr.append(Progress(colors_styles[random.randint(0, 4)], 0))
 
-    is_voted = False
-    for votefact in VoteFact.objects.filter(author=request.user):
-        if VoteVariant.objects.filter(id=votefact.variant_id).filter(voting_id=voting_id).count() != 0:
-            is_voted = True
-            context["is_voted"] = is_voted
-            break
+    if request.user.is_authenticated:
+        is_voted = False
+        for votefact in VoteFact.objects.filter(author=request.user):
+            if VoteVariant.objects.filter(id=votefact.variant_id).filter(voting_id=voting_id).count() != 0:
+                is_voted = True
+                context["is_voted"] = is_voted
+                break
+    else:
+        is_voted = True
+        context["is_voted"] = is_voted
 
     if request.method == "POST":
         print(request.POST)
@@ -196,7 +200,6 @@ def redact_voting(request, voting_id):
         if context['voting'].author != request.user:
             return redirect("/list/")
 
-
     return render(request, 'redact_voting.html', context)
 
 
@@ -209,7 +212,7 @@ def profile(request, profile_id):
     """
     context = {}
     profile = User.objects.get(id=profile_id)
-    context["votings"] = Voting.objects.filter(author = profile_id)
+    context["votings"] = Voting.objects.filter(author=profile_id)
     context["votefacts"] = VoteFact.objects.filter(author=profile_id)
     context["profile"] = profile
     context["profile"] = User.objects.get(id=profile_id)
@@ -244,8 +247,8 @@ def redact_profile(request, redact_profile_id):
                 profile_photo.save()
             except:
                 new_photo = ProfilePhoto(
-                    user_id = redact_profile_id,
-                    image = upload_photo
+                    user_id=redact_profile_id,
+                    image=upload_photo
                 )
                 new_photo.save()
         except:
@@ -275,10 +278,10 @@ def complaint(request):
     if request.method == "POST":
         if request.POST.get('title') and request.POST.get('description'):
             complaint = Complaint(
-                name = request.POST['title'],
-                description = request.POST['description'],
-                author = request.user,
-                created_at = datetime.datetime.now()
+                name=request.POST['title'],
+                description=request.POST['description'],
+                author=request.user,
+                created_at=datetime.datetime.now()
             )
             complaint.save()
     return render(request, "complaint.html", context)
