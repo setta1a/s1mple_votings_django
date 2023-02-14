@@ -115,13 +115,21 @@ def add_voting(request):
     if request.method == "POST":
         if int(request.POST['voting_type']) and request.POST['theme'] and request.POST.get(
                 "variants") and request.user.is_authenticated and request.POST['description']:
-            new_voting = Voting(
-                name=request.POST['theme'],
-                description=request.POST['description'],
-                voting_type=int(request.POST['voting_type']),
-                author=request.user,
-                image=request.FILES['image'],
-            )
+            try:
+                new_voting = Voting(
+                    name=request.POST['theme'],
+                    description=request.POST['description'],
+                    voting_type=int(request.POST['voting_type']),
+                    author=request.user,
+                    image=request.FILES['image'],
+                )
+            except:
+                new_voting = Voting(
+                    name=request.POST['theme'],
+                    description=request.POST['description'],
+                    voting_type=int(request.POST['voting_type']),
+                    author=request.user,
+                )
 
             new_voting.save()
             for variant in request.POST.getlist("variants"):
@@ -205,7 +213,7 @@ def redact_voting(request, voting_id):
 
     return render(request, 'redact_voting.html', context)
 
-
+@login_required(login_url='/registration/')
 def profile(request, profile_id):
     """
         Страница профиля пользователя
@@ -288,4 +296,5 @@ def complaint(request):
             )
             complaint.save()
     return render(request, "complaint.html", context)
+
 # Create your views here.

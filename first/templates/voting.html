@@ -55,10 +55,12 @@
                                     {{ variant.description }}
                                 </button>
                             {% endif %}
+                            <p>{{variant.votes_count}}</p>
                             <br>
                         </div>
 
                     {% endfor %}
+
                     <input class="btn btn-primary" type="submit" value="Отправить">
                 {% endif %}
             </form>
