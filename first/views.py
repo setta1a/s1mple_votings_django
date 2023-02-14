@@ -227,7 +227,7 @@ def profile(request, profile_id):
         context["photo"] = "basic_profile_image.png"
     return render(request, "profile.html", context)
 
-
+@login_required(login_url='/registration/')
 def redact_profile(request, redact_profile_id):
     """
         Обработчик страницы редактирования профиля
