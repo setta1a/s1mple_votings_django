@@ -54,6 +54,9 @@ def voting_page(request, voting_id):
                 context["is_voted"] = is_voted
                 break
     else:
+        hello = "hello, world"
+        print(hello)
+        print("100th commit!!!")
         is_voted = True
         context["is_voted"] = is_voted
 
