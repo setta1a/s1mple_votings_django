@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
-from first.models import Voting, VoteVariant, VoteFact, Complaint
+from first.models import Voting, VoteVariant, VoteFact, Complaint, ProfilePhoto
 
 
 def voting_page(request, voting_id):
@@ -212,6 +212,13 @@ def profile(request, profile_id):
     context["votings"] = Voting.objects.filter(author = profile_id)
     context["votefacts"] = VoteFact.objects.filter(author=profile_id)
     context["profile"] = profile
+    context["profile"] = User.objects.get(id=profile_id)
+    try:
+        profile_photo = ProfilePhoto.objects.get(user_id=profile_id)
+        print(profile_photo.image)
+        context["photo"] = profile_photo.image
+    except:
+        context["photo"] = "basic_profile_image.png"
     return render(request, "profile.html", context)
 
 
@@ -229,9 +236,36 @@ def redact_profile(request, redact_profile_id):
         profile.last_name = request.POST["last_name"]
         profile.email = request.POST["email"]
         profile.save()
+        try:
+            upload_photo = request.FILES['image']
+            try:
+                profile_photo = ProfilePhoto.objects.get(user_id=redact_profile_id)
+                profile_photo.image = upload_photo
+                profile_photo.save()
+            except:
+                new_photo = ProfilePhoto(
+                    user_id = redact_profile_id,
+                    image = upload_photo
+                )
+                new_photo.save()
+        except:
+            print('No photo uploaded')
+
+        try:
+            profile_photo = ProfilePhoto.objects.get(user_id=redact_profile_id)
+            print(profile_photo.image)
+            context["photo"] = profile_photo.image
+        except:
+            context["photo"] = "basic_profile_image.png"
+
     elif request.method == "GET":
         context["profile"] = User.objects.get(id=redact_profile_id)
-
+        try:
+            profile_photo = ProfilePhoto.objects.get(user_id=redact_profile_id)
+            print(profile_photo.image)
+            context["photo"] = profile_photo.image
+        except:
+            context["photo"] = "basic_profile_image.png"
     return render(request, "redact_profile.html", context)
 
 

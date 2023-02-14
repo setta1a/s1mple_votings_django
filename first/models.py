@@ -9,6 +9,9 @@ class Voting(models.Model):
     author = models.ForeignKey(to=User, on_delete=models.CASCADE, default=1)
     image = models.ImageField(upload_to='images', null=True)
 
+class ProfilePhoto(models.Model):
+    user_id = models.IntegerField()
+    image = models.ImageField(upload_to='images', null=True)
 
 
 class VoteVariant(models.Model):

@@ -4,12 +4,15 @@
 <section style="background-color: #eee; border: 2px solid #cacaca; border-radius: 40px;margin: 50px;" class="m-20">
     <div class="container py-5">
         <div class="row">
+            <form action=""  method="POST" enctype="multipart/form-data" class="row">
+                {% csrf_token %}
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4bC5vVUJHVqvTtYqRqAbFCgwikRoDefLn54T7OFJQWA&s"
+                        <img src="../../media/{{photo}}"
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
+                        <input type="file" class="form-control" id="image" data-buttonText="фотография" name="image">
                         <h5 class="my-3" id="full_name">{{profile.last_name}}</h5>
                         <p class="text-muted mb-1">Full Stack Developer</p>
                         <p class="text-muted mb-4"> Some city</p>
@@ -20,8 +23,8 @@
                     </div>
                 </div>
             </div>
-            <form action="" class="col-lg-8" method="POST">
-                {% csrf_token %}
+            <div class="col-lg-8">
+
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="row">
@@ -76,6 +79,7 @@
                         <a class="btn btn-primary" href="/profile/{{profile.id}}/" type="button" value="Редактировать">Назад</a>
                     </div>
                 </div>
+            </div>
             </form>
         </div>
     </div>
