@@ -21,7 +21,9 @@
                                     {{ variant.description }}
                                 </button>
                             {% endif %}
+                            {% if  request.user.is_authenticated %}
                             <label> {{ variant.votes_count }} </label>
+                            {% endif %}
                             <br>
                         </div>
                     {% endfor %}
@@ -38,7 +40,9 @@
                                     {{ variant.description }}
                                 </button>
                             {% endif %}
+                            {% if  request.user.is_authenticated %}
                             <label> {{ variant.votes_count }} </label>
+                            {% endif %}
                             <br>
                         </div>
                     {% endfor %}
@@ -52,11 +56,13 @@
                             <label for="variant_id_{{ variant.id }}">{{ variant.description }}</label>
                             {% else %}
                                 <button class="btn btn-primary disabled btn-lg m-2" name="variant_id" value="{{ variant.id }}">
-                                    {{ variant.description }}
+                                    {{variant.description}}
                                 </button>
                             {% endif %}
-                            <p>{{variant.votes_count}}</p>
                             <br>
+                            {% if  request.user.is_authenticated %}
+                                <label> {{ variant.votes_count }} </label>
+                            {% endif %}
                         </div>
 
                     {% endfor %}
@@ -65,13 +71,15 @@
                 {% endif %}
             </form>
             <p>Автор: {{ voting.author }} </p>
-            {% if is_voted %}
-                <p>Пользователь уже голосовал!</p>
-                {% for obj in progress %}
-                <div class="progress">
-                        <div class="{{ obj.color }}" role="progressbar" style="width: {{obj.procent}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div><br>
-                {% endfor %}
+            {% if request.user.is_authenticated %}
+                {% if is_voted %}
+                    <p>Пользователь уже голосовал!</p>
+                    {% for obj in progress %}
+                    <div class="progress">
+                            <div class="{{ obj.color }}" role="progressbar" style="width: {{obj.procent}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div><br>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </div>

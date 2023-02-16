@@ -5,15 +5,16 @@
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body text-center">
-            <img src="../../media/{{photo}}" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px; min-width: 150px; min-height: 150px">
-            <h5 class="my-3">{{profile.last_name}}</h5>
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="../../media/{{photo}}"
+                             alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <input type="file" class="form-control" id="image" data-buttonText="фотография" name="image">
+                        <h5 class="my-3" id="full_name">{{profile.last_name}}</h5>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
