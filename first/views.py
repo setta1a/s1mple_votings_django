@@ -216,6 +216,7 @@ def redact_voting(request, voting_id):
 
     return render(request, 'redact_voting.html', context)
 
+
 @login_required(login_url='/registration/')
 def profile(request, profile_id):
     """
@@ -237,6 +238,7 @@ def profile(request, profile_id):
     except:
         context["photo"] = "basic_profile_image.png"
     return render(request, "profile.html", context)
+
 
 @login_required(login_url='/registration/')
 def redact_profile(request, redact_profile_id):
@@ -295,9 +297,18 @@ def complaint(request):
                 name=request.POST['title'],
                 description=request.POST['description'],
                 author=request.user,
-                created_at=datetime.datetime.now()
+                created_at=datetime.datetime.now(),
+                status="1"
             )
             complaint.save()
     return render(request, "complaint.html", context)
+
+
+@login_required(login_url='/registration/')
+def view_complaint(request):
+    context = {}
+    arr = Complaint.objects.filter(author=request.user)
+    context["complaints"] = arr
+    return render(request, "view_complaint.html", context)
 
 # Create your views here.

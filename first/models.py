@@ -35,5 +35,6 @@ class Complaint(models.Model):
     description = models.CharField(max_length=200)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField()
+    status = models.CharField(max_length=100)
 
 
