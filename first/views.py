@@ -68,6 +68,8 @@ def voting_page(request, voting_id):
                                   created_at=datetime.datetime.now(),
                                   author=request.user)
                 record.save()
+            context["is_voted"] = True
+            return redirect(f"/voting/{context['voting'].id}")
 
     context["colors"] = variant_colors
     context["votes_percent"] = votes_percent
@@ -138,6 +140,7 @@ def add_voting(request):
                     voting=new_voting,
                 )
                 new_variant.save()
+            return redirect(f"/voting/{new_voting.id}")
 
     return render(request, 'add_voting.html', context)
 
