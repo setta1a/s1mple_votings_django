@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="conteiner">
+    <div class="row">
+        <form class="col-8 offset-2 form" style="margin-top: 10vh;" method="POST" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Имя пользователя</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Введите имя пользователя" name="name">
+            </div>
+              <input type="submit" class="btn btn-danger" value="Удалить">
+            <h3>{{message}}</h3>
+        </form>
+    </div>
+</div>
+{% endblock %}

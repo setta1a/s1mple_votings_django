@@ -334,4 +334,21 @@ def change_complaint_status(request, complaint_id):
     else:
         context["complaint"] = complaint
     return render(request, "change_complaint_status.html", context)
+
+def delete_user(request):
+    context = {}
+    if request.method == "POST":
+        if request.user.username != request.POST["name"] and request.user.is_superuser == False:
+            user = User.objects.get(username=request.POST["name"])
+            user.delete()
+            return redirect('/admin_panel/')
+        elif request.user.username == request.POST["name"]:
+            context["message"] = "Вы не можете удалить себя("
+        else:
+            context["message"] = "Такого пользователя не существует"
+    else:
+        context["message"] = ""
+
+    return render(request, "delete_user.html", context)
+
 # Create your views here.

@@ -11,6 +11,11 @@
                     <a class="nav-link" href="/list/">Список голосований</a>
                 </li>
                 {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin_panel/">Панель администратора</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="/add_voting/">Cоздать голосование</a>
                 </li>
