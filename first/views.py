@@ -89,6 +89,13 @@ def list_of_votings_page(request):
     context["pagetitle"] = "List of votings"
     context["pageheader"] = "Все голосования"
     context["votings_list"] = Voting.objects.all()
+    res = [True]*len(context["votings_list"])
+    for i in range(len(context["votings_list"])):
+        for variant in VoteVariant.objects.filter(voting=context["votings_list"][i].id):
+            if variant.votes_count != 0:
+                res[i] = False
+                break
+    context["votings_list"] = zip(context["votings_list"], res)
     return render(request, 'list_of_votings.html', context)
 
 
