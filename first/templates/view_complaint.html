@@ -4,19 +4,25 @@
 <div class="conteiner">
     <div class="row">
         <div class="col-4 offset-4 mt-5 fs-2">
-        {% for complaint in complaints %}
-                <h2>{{complaint.name}}</h2>
-                {% if complaint.status == 1 %}
-                    <p class="p-2 bg-warning-subtle fs-2 border border-warning rounded-3">Жалоба отправлена на рассмотрение</p>
-                {% endif %}
-                {% if complaint.status == 2 %}
-                    <p class="p-2 bg-danger-subtle fs-2 border border-danger rounded-3">Жалоба отклонена</p>
-                {% endif %}
-                {% if complaint.status == 3 %}
-                    <p class="p-2 bg-success-subtle fs-2 border border-success rounded-3">Жалоба одобрена</p>
-                {% endif %}
-                <p class="fs-6">{{complaint.created_at}}</p>
-        {% endfor %}
+            <form class="form" style="margin-top: 10vh;" method="POST" action="">
+                {% csrf_token %}
+                {% for complaint in complaints %}
+                        <h2>{{complaint.name}}</h2>
+                        {% if complaint.status == 1 %}
+                            <p class="p-2 bg-warning-subtle fs-2 border border-warning rounded-3">Жалоба отправлена на рассмотрение</p>
+                            {% if request.user.is_superuser %}
+                                <a type="link" href="../change_complaint_status/{{complaint.id}}/  " class="btn btn-link">Просмотр статусов жалоб</a>
+                            {% endif %}
+                        {% endif %}
+                        {% if complaint.status == 2 %}
+                            <p class="p-2 bg-danger-subtle fs-2 border border-danger rounded-3">Жалоба отклонена</p>
+                        {% endif %}
+                        {% if complaint.status == 3 %}
+                            <p class="p-2 bg-success-subtle fs-2 border border-success rounded-3">Жалоба одобрена</p>
+                        {% endif %}
+                        <p class="fs-6">{{complaint.created_at}}</p>
+                {% endfor %}
+            </form>
         </div>
     </div>
 </div>

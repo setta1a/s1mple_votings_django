@@ -4,7 +4,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from dj_project import settings
 from first.views import voting_page, list_of_votings_page, index_page, add_voting, registration, redact_voting, profile, \
-    redact_profile, complaint, view_complaint
+    redact_profile, complaint, view_complaint, admin_panel, change_complaint_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +24,9 @@ urlpatterns = [
     path('profile/<int:profile_id>/', profile),
     path('redact_profile/<int:redact_profile_id>/', redact_profile),
     path('complaint/', complaint),
-    path('view_complaint/', view_complaint)
+    path('view_complaint/', view_complaint),
+    path('admin_panel/', admin_panel),
+    path('change_complaint_status/<int:complaint_id>/', change_complaint_status)
 ]
 
 

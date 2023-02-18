@@ -312,8 +312,26 @@ def complaint(request):
 @login_required(login_url='/login/')
 def view_complaint(request):
     context = {}
-    arr = Complaint.objects.filter(author=request.user)
+    if request.user.is_superuser:
+        arr = Complaint.objects.all()
+    else:
+        arr = Complaint.objects.filter(author=request.user)
     context["complaints"] = arr
     return render(request, "view_complaint.html", context)
 
+def admin_panel(request):
+    context = {}
+    context["complaints"] = Complaint.objects
+    return render(request, "admin_panel.html", context)
+
+def change_complaint_status(request, complaint_id):
+    context = {}
+    complaint = Complaint.objects.get(id=complaint_id)
+    if request.method == "POST":
+        complaint.status = request.POST["status"]
+        complaint.save()
+        return redirect("/view_complaint/")
+    else:
+        context["complaint"] = complaint
+    return render(request, "change_complaint_status.html", context)
 # Create your views here.
