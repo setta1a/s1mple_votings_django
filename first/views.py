@@ -54,9 +54,6 @@ def voting_page(request, voting_id):
                 context["is_voted"] = is_voted
                 break
     else:
-        hello = "hello, world"
-        print(hello)
-        print("100th commit!!!")
         is_voted = True
         context["is_voted"] = is_voted
 
@@ -112,7 +109,7 @@ def index_page(request):
     return render(request, 'index.html', context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def add_voting(request):
     """
         Обработчик страницы добавления голосования
@@ -178,7 +175,7 @@ def registration(request):
     return render(request, 'registration/registrarion.html', context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def redact_voting(request, voting_id):
     """
         Обработчик страницы редактирования голосования
@@ -212,7 +209,7 @@ def redact_voting(request, voting_id):
                 new_variant = VoteVariant.objects.get(id=variant[1])
                 new_variant.description = variant[0]
                 new_variant.save()
-
+        return redirect(f"/voting/{voting_tochange.id}")
     else:
         for variant in context['variants']:
             if VoteFact.objects.filter(variant=variant.id).count() != 0:
@@ -224,7 +221,7 @@ def redact_voting(request, voting_id):
     return render(request, 'redact_voting.html', context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def profile(request, profile_id):
     """
         Страница профиля пользователя
@@ -247,7 +244,7 @@ def profile(request, profile_id):
     return render(request, "profile.html", context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def redact_profile(request, redact_profile_id):
     """
         Обработчик страницы редактирования профиля
@@ -295,7 +292,7 @@ def redact_profile(request, redact_profile_id):
     return render(request, "redact_profile.html", context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def complaint(request):
     context = {}
     if request.method == "POST":
@@ -305,13 +302,14 @@ def complaint(request):
                 description=request.POST['description'],
                 author=request.user,
                 created_at=datetime.datetime.now(),
-                status="1"
+                status=1
             )
             complaint.save()
+        return redirect("/view_complaint/")
     return render(request, "complaint.html", context)
 
 
-@login_required(login_url='/registration/')
+@login_required(login_url='/login/')
 def view_complaint(request):
     context = {}
     arr = Complaint.objects.filter(author=request.user)
