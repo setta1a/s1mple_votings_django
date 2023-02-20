@@ -8,6 +8,7 @@
                 {% csrf_token %}
                 {% if request.user.is_superuser %}
                     <h2>{{complaint.name}}</h2>
+                    <h4>{{complaint.description}}</h4>
                     <p class="p-2 bg-warning-subtle fs-2 border border-warning rounded-3">Жалоба отправлена на рассмотрение</p>
                     <button type="submit" class="btn btn-danger" name="status" value="2">Отклонить</button>
                     <button type="submit" class="btn btn-success" name="status" value="3">Одобрить</button>

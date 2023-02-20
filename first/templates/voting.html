@@ -75,8 +75,8 @@
                 {% if is_voted %}
                     <p>Пользователь уже голосовал!</p>
                     {% for obj in progress %}
-                    <div class="progress">
-                            <div class="{{ obj.color }}" role="progressbar" style="width: {{obj.procent}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-stacked">
+                            <div class="progress {{ obj.color }}" role="progressbar" style="width: {{obj.procent}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">{{obj.procent}}%</div>
                     </div><br>
                     {% endfor %}
                 {% endif %}
