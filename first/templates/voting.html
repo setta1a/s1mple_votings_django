@@ -6,6 +6,7 @@
         <div class="Voting card m-10 col-6 offset-3 mt-3 border border-primary-subtle p-2">
             <h2 class="subtitle m-2">{{ voting.name }}</h2>
             <p class="m-3">{{ voting.description }}</p>
+            <img src="../../media/{{voting.image}}" class="border rounded" alt="">
             <form action="" method="post">
                 {% csrf_token %}
                 {% if voting.voting_type == 3 %}
@@ -22,7 +23,9 @@
                                 </button>
                             {% endif %}
                             {% if  request.user.is_authenticated %}
-                            <label> {{ variant.votes_count }} </label>
+                                {% if is_voted %}
+                                    <label> {{ variant.votes_count }} </label>
+                                {% endif %}
                             {% endif %}
                             <br>
                         </div>
@@ -41,7 +44,9 @@
                                 </button>
                             {% endif %}
                             {% if  request.user.is_authenticated %}
-                            <label> {{ variant.votes_count }} </label>
+                                {% if is_voted %}
+                                    <label> {{ variant.votes_count }} </label>
+                                {% endif %}
                             {% endif %}
                             <br>
                         </div>
@@ -61,7 +66,9 @@
                             {% endif %}
                             <br>
                             {% if  request.user.is_authenticated %}
-                                <label> {{ variant.votes_count }} </label>
+                                {% if is_voted %}
+                                    <label> {{ variant.votes_count }} </label>
+                                {% endif %}
                             {% endif %}
                         </div>
 
