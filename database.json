@@ -1,0 +1,46 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$4J5qWhI7s900m6O1NohpkX$95KDea9BN7rCJgpODTB+Gok0DbZpRaD6kpyv8gPAngI=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "vasya",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-01-17T16:47:32.845Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "first.voting",
+    "pk": 1,
+    "fields": {
+        "name": "Быть или не быть",
+        "description": "Вот в чём вопрос",
+        "voting_type": 3,
+        "author": 1
+    }
+},
+{
+    "model": "first.votevariant",
+    "pk": 1,
+    "fields": {
+        "description": "Быть",
+        "voting": 1
+    }
+},
+{
+    "model": "first.votevariant",
+    "pk": 2,
+    "fields": {
+        "description": "Не быть",
+        "voting": 1
+    }
+}
+]
